@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if type shellcheck > /dev/null 2>&1; then
+  shellcheck src/*
+else
+  echo "shellcheck not installed."
+fi

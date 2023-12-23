@@ -31,3 +31,6 @@ case $1 in
     exit 1
   ;;
 esac
+
+# force shellcheck fail.
+UNUSED_VARIABLE=foo

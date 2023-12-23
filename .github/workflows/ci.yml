@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: check out
         uses: actions/checkout@v4
-      - name: TEMPORARILY install nc
-        run: sudo apt-get install nc
+      - name: TEMPORARILY install netcat
+        run: sudo apt-get install -y netcat
       - name: test
         run: |
           cd ${{ github.workspace }} && ./bin/test

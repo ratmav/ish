@@ -8,3 +8,5 @@ jobs:
         uses: actions/checkout@v4
       - name: lint
         uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: './src'

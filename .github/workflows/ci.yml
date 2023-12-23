@@ -1,7 +1,7 @@
-name: test
+name: ci
 on: [push]
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: check out
@@ -12,3 +12,8 @@ jobs:
       - name: test
         run: |
           cd ${{ github.workspace }} && ./bin/test
+      - name: lint
+        uses: ludeeus/action-shellcheck@master
+        with:
+          check_together: 'yes'
+          scandir: './src'

@@ -1,7 +1,7 @@
-name: ci
+name: ish ci
 on: [push]
 jobs:
-  lint:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: check out

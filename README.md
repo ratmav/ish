@@ -38,8 +38,6 @@ ish
 
 * [bash](https://www.gnu.org/software/bash/manual/bash.html)
 * [bats](https://github.com/bats-core/bats-core)
-    * initialize: `git submodule init`
-    * update: `git submodule update`
 * [shellcheck](https://github.com/koalaman/shellcheck)
 
 ## develop

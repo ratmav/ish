@@ -6,9 +6,6 @@ jobs:
     steps:
       - name: check out
         uses: actions/checkout@v4
-      - name: initialize bats
-        run: |
-          cd ${{ github.workspace }} && git submodule init --recursive
       - name: test
         run: |
           cd ${{ github.workspace }} && ./bin/test

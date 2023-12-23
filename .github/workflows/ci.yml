@@ -8,7 +8,7 @@ jobs:
         uses: actions/checkout@v4
       - name: test
         run: |
-          sudo apt-get install -y netcat && cd ${{ github.workspace }} && ./bin/test
+          cd ${{ github.workspace }} && ./bin/test
       - name: lint
         uses: ludeeus/action-shellcheck@master
         with:

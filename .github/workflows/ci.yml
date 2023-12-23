@@ -1,10 +1,10 @@
-name: ish ci
+name: ci
 on: [push]
 jobs:
-  ci:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - name: check out
+      - name: checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive

@@ -7,7 +7,7 @@ jobs:
       - name: check out
         uses: actions/checkout@v4
       - name: TEMPORARILY install nc
-        run: apt install nc
+        run: sudo apt-get install nc
       - name: test
         run: |
           cd ${{ github.workspace }} && ./bin/test

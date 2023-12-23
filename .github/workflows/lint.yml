@@ -9,4 +9,5 @@ jobs:
       - name: lint
         uses: ludeeus/action-shellcheck@master
         with:
+          check_together: 'yes'
           scandir: './src'

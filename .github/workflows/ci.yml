@@ -10,7 +10,7 @@ jobs:
           submodules: recursive
       - name: test
         run: |
-          cd ${{ github.repository }} && ./bin/test
+          cd ${{ github.workspace }} && ./bin/test
       - name: lint
         uses: ludeeus/action-shellcheck@master
         with:

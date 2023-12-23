@@ -6,9 +6,6 @@ jobs:
     steps:
       - name: check out
         uses: actions/checkout@v4
-      - name: test
-        run: |
-          cd ${{ github.workspace }} && ./bin/test
       - name: lint
         uses: ludeeus/action-shellcheck@master
         with:

@@ -37,10 +37,10 @@ ish
 ## dependencies
 
 * [bash](https://www.gnu.org/software/bash/manual/bash.html)
-* [bats](https://github.com/bats-core/bats-core)
 * [shellcheck](https://github.com/koalaman/shellcheck)
 
 ## develop
 
-* test w/ bats: `./bin/test`
-* lint w/ shellcheck: `./bin/lint`
+* clone: `git clone --recurse-submodules https://github.com/ratmav/ish`
+* test w/ [bats](https://github.com/bats-core/bats-core): `cd ish && ./bin/test`
+* lint w/ shellcheck: `cd ish ** ./bin/lint`

@@ -43,4 +43,4 @@ ish
 
 * clone: `git clone --recurse-submodules https://github.com/ratmav/ish`
 * test w/ [bats](https://github.com/bats-core/bats-core): `cd ish && ./bin/test`
-* lint w/ shellcheck: `cd ish ** ./bin/lint`
+* lint w/ shellcheck: `cd ish && ./bin/lint`

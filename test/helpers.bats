@@ -1,3 +1,5 @@
+# note: the functions being tested here are not intended for downstream use.
+
 setup_file() {
   # other test failures may leave these lying around.
   rm -f /tmp/ish_*
@@ -22,9 +24,9 @@ setup() {
 }
 
 @test "_symlink_exists" {
-  refute _symlink_exists /tmp/ish_symlink_test
-  ln -s $PWD/fixtures/ish_symlink_test /tmp/ish_symlink_test
-  assert _symlink_exists /tmp/ish_symlink_test
+  refute _symlink_exists /tmp/ish_filesystem_symlink_test
+  ln -s $PWD/fixtures/ish_filesystem_symlink_test /tmp/ish_filesystem_symlink_test
+  assert _symlink_exists /tmp/ish_filesystem_symlink_test
 }
 
 teardown_file() {

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# note: the functions in this file have tests, but they are not intended for downstream use.
+
 # check existence of file given file path.
 _file_exists() {
   if [ -f "$1" ]; then

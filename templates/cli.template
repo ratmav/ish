@@ -38,14 +38,12 @@ main() {
 }
 
 parse_params() {
-  args=("$@")
-
   while :; do
     case "${1-}" in
     --help) usage ;;
     --call-function)
-      if [ ! -z ${2-} ]; then
-        if compgen -A function | grep $2> /dev/null 2>&1; then
+      if [ -n "${2-}" ]; then
+        if compgen -A function | grep "$2"> /dev/null 2>&1; then
           $2
         else
           available_functions
@@ -55,8 +53,8 @@ parse_params() {
       fi
       ;;
     *)
-      if [ ! -z $@ ]; then
-        ish_tui_msg "${ISH_TUI_ERROR}unknown option: $@" && usage
+      if [ -n "$*" ]; then
+        ish_tui_msg "${ISH_TUI_ERROR}unknown option: $*" && usage
       else
         usage
       fi

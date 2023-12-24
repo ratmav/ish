@@ -4,11 +4,14 @@ set -Eeuo pipefail
 
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
+# shellcheck disable=SC1091
 source "$SCRIPT_DIR"/../src/tui.sh
 
 cli() {
-  cp $SCRIPT_DIR/../templates/cli.template ./cli.sh
+  rm -f ./cli.sh
+  cp "$SCRIPT_DIR"/../templates/cli.template ./cli.sh
   chmod +x ./cli.sh
+  ish_tui_msg "${ISH_TUI_WARN}wrote new cli.sh from template."
   exit
 }
 
@@ -18,15 +21,13 @@ main() {
 }
 
 parse_params() {
-  args=("$@")
-
   while :; do
     case "${1-}" in
     --cli) cli ;;
     --help) usage ;;
     *)
-      if [ ! -z $@ ]; then
-        ish_tui_msg "${ISH_TUI_ERROR}unknown option: $@" && usage
+      if [ -n "$*" ]; then
+        ish_tui_msg "${ISH_TUI_ERROR}unknown option: $*" && usage
       else
         usage
       fi

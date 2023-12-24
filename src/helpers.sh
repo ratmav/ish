@@ -20,7 +20,7 @@ _is_on_path() {
 
 # check existence and functionality of symbolic link.
 _symlink_exists() {
-  if [ -L $1 ] && [ -e $1 ]; then
+  if [ -L "$1" ] && [ -e "$1" ]; then
     return 0
   else
     return 1

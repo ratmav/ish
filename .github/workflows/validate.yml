@@ -8,11 +8,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-      - name: test
+      - name: test source
         run: |
           cd ${{ github.workspace }} && ./bin/test
-      - name: lint
+      - name: lint source
         uses: ludeeus/action-shellcheck@master
         with:
           check_together: 'yes'
           scandir: './src'
+      - name: lint binstubs
+        uses: ludeeus/action-shellcheck@master
+        with:
+          check_together: 'yes'
+          scandir: './bin'

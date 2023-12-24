@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+trap error ERR
+trap interrupted SIGINT
+trap terminated SIGTERM
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+
+source ish/src/tui.sh
+
+available_functions() {
+  ish_tui_msg "${ISH_TUI_WARN}function not found. available functions:"
+  for function in $(compgen -A function); do
+    ish_tui_msg "${ISH_TUI_WARN}...$function"
+  done
+}
+
+die() {
+  local message=$1
+  local code=${2-1} # default exit status 1
+  ish_tui_msg "${ISH_TUI_ERROR}$message"
+  exit "$code"
+}
+
+error () {
+  trap - ERR
+}
+
+interrupted() {
+  trap - SIGINT
+  ish_tui_msg "${ISH_TUI_WARN}interrupted."
+}
+
+main() {
+  ish_tui_msg_init
+  parse_params "$@"
+}
+
+parse_params() {
+  args=("$@")
+
+  while :; do
+    case "${1-}" in
+    --help) usage ;;
+    --call-function)
+      if [ ! -z ${2-} ]; then
+        if compgen -A function | grep $2> /dev/null 2>&1; then
+          $2
+        else
+          available_functions
+        fi
+      else
+        available_functions
+      fi
+      ;;
+    *)
+      if [ ! -z $@ ]; then
+        ish_tui_msg "${ISH_TUI_ERROR}unknown option: $@" && usage
+      else
+        usage
+      fi
+      ;;
+    esac
+    shift
+  done
+
+  return 0
+}
+
+terminated() {
+  trap - SIGTERM
+  ish_tui_msg "${ISH_TUI_ERROR}terminated."
+}
+
+usage() {
+  cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [--help] [--call-function]
+
+Available flags (choose one):
+
+--help       Print this help and exit.
+--call-function \$NAME call-function a specific function by name. leave name blank for a list of functions.
+EOF
+  exit
+}
+
+main "$@"

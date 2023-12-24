@@ -1,7 +1,7 @@
 ish
 ===
 
-(i)dempotency [preferred] (sh)ell library
+(i)dempotent (sh)ell
 
 ```
                             .:
@@ -46,13 +46,23 @@ ish is meant to be used from other projects as a [git submodule](https://git-scm
 $ git submodule add https://github.com/ratmav/ish.git ish
 ```
 
-now, assuming the below project structure:
+moving foward, assume the following project structure:
 
 ```shell
 .
+├── ish
+│   ├── bin
+│   │   ├── scaffold
+│   │   └── ...
+│   ├── src
+│   │   ├── filesystem.sh
+│   │   └── ...
+│   └── ...
 ├── project.sh
 └── README.md
 ```
+
+### as a library
 
 `project.sh` sources ish's filesystem script and calls `ish_filesystem_symlink` to idempotently symlink the project readme to a location in /tmp:
 
@@ -64,9 +74,35 @@ source ish/src/filesystem.sh
 ish_filesystem_symlink $PWD /tmp README.md
 ```
 
-### why is this useful?
+### as a tool
 
-the symlink may already exist, be broken, etc. `ish_filesystem_symlink` will create _or recreate_ the symlink, meaning we can call `ish_filesytem_symlink` for [idempotent](https://en.wikipedia.org/wiki/Idempotence) shell operations. in other words, we can call `ish_filesystem_symlink` multiple times and get the same result.
+with the above project structure in mind, ish provides the following [binstubs](https://github.com/rbenv/rbenv/wiki/Understanding-binstubs) to automate common tasks.
+
+#### `scaffold`
+
+```shell
+./ish/bin/scaffold --help
+Usage: scaffold [--cli] [--help]
+
+Available flags (choose one):
+
+--cli  generate a cli application template in ./cli.sh
+--help Print this help and exit.
+```
+
+for each scaffold, see the corresponding template file in the `./templates/` directory.
+
+## develop
+
+* clone: `git clone --recurse-submodules https://github.com/ratmav/ish`
+* test w/ [bats](https://github.com/bats-core/bats-core): `cd ish && ./bin/test`
+* lint w/ [shellcheck](https://github.com/koalaman/shellcheck): `cd ish && ./bin/lint`
+
+## faq
+
+### what makes ish useful?
+
+in the example from the above section on using ish as a library, the symlink may already exist, be broken, etc. `ish_filesystem_symlink` will create _or recreate_ the symlink, meaning we can call `ish_filesytem_symlink` for [idempotent](https://en.wikipedia.org/wiki/Idempotence) shell operations. in other words, we can call `ish_filesystem_symlink` multiple times and get the same result.
 
 ### are **all** ish operations idempotent?
 
@@ -80,10 +116,4 @@ live off the land.
 
 other tools are meant to do more specific tasks, such as configuration management, and as such provide dsl's that are typically yaml based. when the task at hand becomes more complex than the dsl was designed to handle, it's often necessary to call out to other tools, usually bash. configuration management tools also tend to require things like a python interpreter or some agent installation on the target system.
 
-ish is meant to have minimal dependencies and be used by other projects as a library. it may make sense to use ish to prepare systems for use with other tools, or simply use ish as a generic toolbox of common utilities.
-
-## develop
-
-* clone: `git clone --recurse-submodules https://github.com/ratmav/ish`
-* test w/ [bats](https://github.com/bats-core/bats-core): `cd ish && ./bin/test`
-* lint w/ [shellcheck](https://github.com/koalaman/shellcheck): `cd ish && ./bin/lint`
+ish is meant to have minimal dependencies, be available for use as a library, and provide some convenience tooling for common tasks. it may make sense to use ish to provision systems for use by other tools (such as installing a configuration management agent), or it may make sense to simply use ish as a generic toolbox of common utilities.
